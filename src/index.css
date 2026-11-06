@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-mono-numbers {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom subtle scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(45, 212, 191, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(45, 212, 191, 0.4);
+}
+
+/* 2.5D Isometric transformations */
+.isometric-grid {
+  transform: rotateX(55deg) rotateZ(-40deg);
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.isometric-room {
+  transform-style: preserve-3d;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.isometric-room:hover {
+  transform: translateZ(24px) scale(1.03);
+}
+
+.isometric-badge {
+  transform: rotateZ(40deg) rotateX(-55deg);
+}

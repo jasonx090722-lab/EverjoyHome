@@ -1,0 +1,6 @@
+{
+  "name": "EverJoy Home - Virtual Workspace & Second Brain",
+  "description": "Văn phòng ảo 2.5D, Product Wiki & Second Brain, Trợ lý AI Training và Ma trận Đào tạo Chéo KSAO dành cho EverJoy Home.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

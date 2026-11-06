@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EverJoy Home - Văn Phòng Ảo & Second Brain</title>
+  <meta name="description" content="Văn phòng ảo 2.5D, Product Wiki & Second Brain, Trợ lý AI Training và Ma trận Đào tạo Chéo KSAO dành cho EverJoy Home.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 6 Icons via CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              teal: '#0D9488',
+              cyan: '#06B6D4',
+              dark: '#0F172A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .font-mono-nums {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.8); }
+    ::-webkit-scrollbar-thumb { background: rgba(45, 212, 191, 0.3); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(45, 212, 191, 0.5); }
+  </style>
+</head>
+<body class="h-full bg-slate-950 text-slate-100 font-sans antialiased selection:bg-teal-500 selection:text-white">
+
+  <!-- ==================== 1. FAKE LOGIN SCREEN ==================== -->
+  <div id="loginScreen" class="min-h-screen flex flex-col justify-center items-center px-4 relative overflow-hidden">
+    <div class="absolute top-1/4 -left-32 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="w-full max-w-md z-10">
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-teal-500 to-cyan-400 text-slate-950 shadow-lg shadow-teal-500/20 mb-4">
+          <i class="fa-solid fa-brain text-2xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight text-white flex items-center justify-center gap-2">
+          <span>EverJoy Home</span>
+          <span class="text-xs uppercase px-2 py-0.5 font-semibold bg-teal-500/20 text-teal-400 rounded border border-teal-500/30">Workspace</span>
+        </h1>
+        <p class="mt-2 text-sm text-slate-400">Virtual Workspace & Second Brain System</p>
+      </div>
+
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-md shadow-2xl">
+        <div class="mb-6 pb-4 border-b border-slate-800">
+          <h2 class="text-base font-semibold text-white">Đăng nhập Văn phòng Ảo</h2>
+          <p class="text-xs text-slate-400 mt-1">Cơ chế Bắc cầu: Nhập bất kỳ thông tin nào hoặc để trống và bấm Đăng Nhập để vào ngay.</p>
+        </div>
+
+        <form id="loginForm" onsubmit="event.preventDefault(); doLogin();" class="space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Mã Nhân Viên / Email Doanh Nghiệp</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <i class="fa-regular fa-user text-sm"></i>
+              </div>
+              <input id="loginInputUser" type="text" placeholder="VD: nguyen.vana@everjoyhome.com hoặc NV-882" class="w-full pl-9 pr-3 py-2.5 bg-slate-800/80 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-xs font-medium text-slate-300">Mật Khẩu Nội Bộ</label>
+              <span class="text-xs text-teal-400">Bắc cầu tự do</span>
+            </div>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <i class="fa-solid fa-lock text-sm"></i>
+              </div>
+              <input type="password" placeholder="••••••••••••" class="w-full pl-9 pr-3 py-2.5 bg-slate-800/80 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            </div>
+          </div>
+
+          <button type="submit" id="loginBtn" class="w-full mt-2 py-2.5 px-4 bg-teal-500 hover:bg-teal-400 active:bg-teal-600 text-slate-950 font-semibold rounded-lg text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-teal-500/25 cursor-pointer">
+            <span>Đăng Nhập Vào Hệ Thống</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </form>
+
+        <div class="mt-6 pt-5 border-t border-slate-800">
+          <p class="text-xs font-medium text-slate-400 mb-2.5 text-center">Hoặc chọn nhanh hồ sơ demo:</p>
+          <div class="space-y-1.5">
+            <button onclick="quickSelectUser('Nguyễn Văn A', 'R&D Specialist')" class="w-full p-2 bg-slate-800/60 hover:bg-slate-800 rounded-lg border border-slate-700/60 text-left text-xs flex items-center justify-between text-slate-300">
+              <span>Nguyễn Văn A - <strong>R&D Specialist</strong></span>
+              <i class="fa-solid fa-arrow-right text-[10px] text-teal-400"></i>
+            </button>
+            <button onclick="quickSelectUser('Trần Thị B', 'Sourcing Lead')" class="w-full p-2 bg-slate-800/60 hover:bg-slate-800 rounded-lg border border-slate-700/60 text-left text-xs flex items-center justify-between text-slate-300">
+              <span>Trần Thị B - <strong>Sourcing Lead</strong></span>
+              <i class="fa-solid fa-arrow-right text-[10px] text-teal-400"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. MAIN VIRTUAL WORKSPACE DASHBOARD ==================== -->
+  <div id="mainDashboard" class="hidden min-h-screen flex flex-col">
+    <!-- Top Header Bar -->
+    <header class="sticky top-0 z-50 bg-slate-900/95 border-b border-slate-800 backdrop-blur-md px-4 sm:px-6 py-3">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div onclick="switchTab('tab-overview')" class="flex items-center gap-2.5 cursor-pointer shrink-0">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-500 to-cyan-400 flex items-center justify-center text-slate-950 shadow-md shadow-teal-500/20 font-bold">
+            <i class="fa-solid fa-cube text-base"></i>
+          </div>
+          <div>
+            <div class="text-base font-bold tracking-tight text-white flex items-center gap-2">
+              <span>EverJoy Home</span>
+              <span class="text-[10px] uppercase font-semibold px-1.5 py-0.2 bg-teal-500/10 text-teal-400 rounded border border-teal-500/20">2nd Brain</span>
+            </div>
+            <div class="text-[11px] text-slate-400 hidden sm:block">Virtual Workspace & SLA Platform</div>
+          </div>
+        </div>
+
+        <nav class="hidden lg:flex items-center gap-1.5">
+          <button onclick="switchTab('tab-overview')" id="nav-tab-overview" class="nav-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors bg-teal-500/15 text-teal-300 border border-teal-500/30">
+            <i class="fa-solid fa-map-location-dot mr-1.5 text-teal-400"></i>Sơ đồ Văn phòng
+          </button>
+          <button onclick="switchTab('tab-wiki')" id="nav-tab-wiki" class="nav-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-300 hover:text-white hover:bg-slate-800">
+            <i class="fa-solid fa-book-open mr-1.5 text-teal-400"></i>Product Wiki
+          </button>
+          <button onclick="switchTab('tab-ai')" id="nav-tab-ai" class="nav-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-300 hover:text-white hover:bg-slate-800">
+            <i class="fa-solid fa-robot mr-1.5 text-cyan-400"></i>Trợ lý AI & Video 60s
+          </button>
+          <button onclick="switchTab('tab-ksao')" id="nav-tab-ksao" class="nav-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-300 hover:text-white hover:bg-slate-800">
+            <i class="fa-solid fa-award mr-1.5 text-emerald-400"></i>Ma trận KSAO
+          </button>
+          <button onclick="switchTab('tab-sla')" id="nav-tab-sla" class="nav-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-300 hover:text-white hover:bg-slate-800">
+            <i class="fa-solid fa-stopwatch mr-1.5 text-amber-400"></i>SLA 146d → 90d
+          </button>
+        </nav>
+
+        <div class="flex items-center gap-3 shrink-0">
+          <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/80">
+            <div class="relative">
+              <div id="userAvatarText" class="w-7 h-7 rounded-full bg-teal-600 text-white font-bold text-xs flex items-center justify-center">A</div>
+              <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+            </div>
+            <div class="hidden sm:block text-left text-xs leading-tight">
+              <div id="userNameText" class="font-semibold text-white truncate max-w-[120px]">Nguyễn Văn A</div>
+              <div id="userRoleText" class="text-[10px] text-teal-400 truncate max-w-[120px]">R&D Specialist</div>
+            </div>
+          </div>
+
+          <button onclick="doLogout()" title="Đăng xuất" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-950/30 rounded-lg transition-colors cursor-pointer">
+            <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Body -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+      <!-- TAB 1: 2.5D ISOMETRIC VIRTUAL OFFICE OVERVIEW -->
+      <section id="tab-overview" class="workspace-tab space-y-6">
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 backdrop-blur flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs text-teal-400 font-medium mb-1">
+              <i class="fa-solid fa-satellite-dish animate-pulse"></i>
+              <span>VĂN PHÒNG ẢO TRỰC QUYẾT TỔNG HỢP</span> · <span class="text-slate-400">EverJoy Home Headquarters</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Trung Tâm Điều Hành Second Brain & R&D</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Khám phá các phân khu 2.5D bên dưới hoặc chọn tab tính năng để làm việc.</p>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 shrink-0">
+            <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-2.5 text-center">
+              <div class="text-[11px] text-slate-400">Thư viện Tri thức</div>
+              <div class="text-base font-bold text-teal-400 font-mono-nums">1.181 SKUs</div>
+            </div>
+            <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-2.5 text-center">
+              <div class="text-[11px] text-slate-400">Mục tiêu SLA</div>
+              <div class="text-base font-bold text-amber-400 font-mono-nums">&lt; 90 Ngày</div>
+            </div>
+            <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-2.5 text-center">
+              <div class="text-[11px] text-slate-400">Đào tạo Chéo</div>
+              <div class="text-base font-bold text-emerald-400 font-mono-nums" id="quickKsaoScore">72%</div>
+            </div>
+            <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-2.5 text-center">
+              <div class="text-[11px] text-slate-400">Trợ lý AI</div>
+              <div class="text-base font-bold text-cyan-400 font-mono-nums">1s Trực tuyến</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.5D Isometric Floor -->
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Zone 1 -->
+            <div onclick="switchTab('tab-wiki')" class="group p-6 rounded-2xl bg-gradient-to-br from-teal-950/40 to-slate-900 border border-teal-500/30 hover:border-teal-400 hover:-translate-y-1.5 transition-all cursor-pointer">
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center text-xl">
+                  <i class="fa-solid fa-book-atlas"></i>
+                </div>
+                <span class="text-xs font-mono px-2 py-1 bg-slate-800 rounded text-teal-300">ZONE-01 · Core Wiki</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-teal-300 transition-colors">Thư viện Tri thức & Product Wiki</h3>
+              <p class="text-xs text-slate-300 mt-2 mb-4 leading-relaxed">Tiêu chuẩn FDA, BPA-Free, Lead-Free cho US/CA/MX, SOPs bàn giao và tra cứu 1.181 SKUs.</p>
+              <div class="text-xs text-teal-400 font-semibold flex items-center gap-1.5">
+                <span>Vào tra cứu tài liệu</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </div>
+            </div>
+
+            <!-- Zone 2 -->
+            <div onclick="switchTab('tab-ai')" class="group p-6 rounded-2xl bg-gradient-to-br from-cyan-950/40 to-slate-900 border border-cyan-500/30 hover:border-cyan-400 hover:-translate-y-1.5 transition-all cursor-pointer">
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-xl">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <span class="text-xs font-mono px-2 py-1 bg-slate-800 rounded text-cyan-300">ZONE-02 · AI Agent</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">Trợ lý AI & Phòng Micro-Learning</h3>
+              <p class="text-xs text-slate-300 mt-2 mb-4 leading-relaxed">Chatbot trả lời quy trình tức thì 1 giây + Video giả lập bài giảng Onboarding 60 giây.</p>
+              <div class="text-xs text-cyan-400 font-semibold flex items-center gap-1.5">
+                <span>Vào phòng học & hỏi đáp</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </div>
+            </div>
+
+            <!-- Zone 3 -->
+            <div onclick="switchTab('tab-ksao')" class="group p-6 rounded-2xl bg-gradient-to-br from-emerald-950/40 to-slate-900 border border-emerald-500/30 hover:border-emerald-400 hover:-translate-y-1.5 transition-all cursor-pointer">
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xl">
+                  <i class="fa-solid fa-award"></i>
+                </div>
+                <span class="text-xs font-mono px-2 py-1 bg-slate-800 rounded text-emerald-300">ZONE-03 · KSAO</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">Phòng Đào tạo Chéo & Ma trận KSAO</h3>
+              <p class="text-xs text-slate-300 mt-2 mb-4 leading-relaxed">Theo dõi 4 trụ cột KSAO cho R&D, Sourcing, Marketing. Xác nhận hoàn thành khóa học tương tác.</p>
+              <div class="text-xs text-emerald-400 font-semibold flex items-center gap-1.5">
+                <span>Xem ma trận năng lực</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </div>
+            </div>
+
+            <!-- Zone 4 -->
+            <div onclick="switchTab('tab-sla')" class="group p-6 rounded-2xl bg-gradient-to-br from-amber-950/40 to-slate-900 border border-amber-500/30 hover:border-amber-400 hover:-translate-y-1.5 transition-all cursor-pointer">
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-xl">
+                  <i class="fa-solid fa-stopwatch-20"></i>
+                </div>
+                <span class="text-xs font-mono px-2 py-1 bg-slate-800 rounded text-amber-300">ZONE-04 · 90d SLA</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-amber-300 transition-colors">Phòng họp R&D & SLA Pipeline Tracker</h3>
+              <p class="text-xs text-slate-300 mt-2 mb-4 leading-relaxed">Đo lường chi tiết 146 ngày -> dưới 90 ngày. Bộ dự phóng ngày ra mắt dự án mới.</p>
+              <div class="text-xs text-amber-400 font-semibold flex items-center gap-1.5">
+                <span>Mở bộ đo lường SLA</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PRODUCT WIKI & SECOND BRAIN -->
+      <section id="tab-wiki" class="workspace-tab hidden space-y-6">
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 backdrop-blur">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-xl font-bold text-white">Product Wiki & Thư Viện Tri Thức Sản Phẩm</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Tiêu chuẩn FDA, Lead-Free, SOP liên phòng ban & Bài học 1.181 SKUs</p>
+            </div>
+            <span class="text-xs font-mono px-2.5 py-1 bg-teal-500/10 text-teal-300 border border-teal-500/30 rounded-lg">100% US/CA/MX Standards</span>
+          </div>
+
+          <div class="relative">
+            <input id="wikiSearchInput" oninput="renderWikiContent()" type="text" placeholder="Tìm kiếm nhanh: FDA, chì, SOP, rò rỉ nắp, SKU-EJH-DW802..." class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+          </div>
+        </div>
+
+        <div id="wikiContainer" class="space-y-6"></div>
+      </section>
+
+      <!-- TAB 3: AI ASSISTANT & 60s MICRO-LEARNING -->
+      <section id="tab-ai" class="workspace-tab hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- AI Chat -->
+        <div class="lg:col-span-7 flex flex-col h-[700px] bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+          <div class="px-5 py-3.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-white">EverJoy Second Brain AI Agent</h3>
+                <span class="text-[10px] text-emerald-400 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>Phản hồi trong 1 giây
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Suggested Questions -->
+          <div class="p-3 bg-slate-950/70 border-b border-slate-800 text-xs space-y-1.5">
+            <div class="text-[10px] text-slate-400 font-semibold">Gợi ý câu hỏi chuẩn một chạm:</div>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="askPreset('Tiêu chuẩn kiểm thử Drinkware xuất đi Mỹ (FDA & Prop 65)?')" class="text-[10px] px-2 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-300 rounded border border-slate-700">FDA Drinkware US</button>
+              <button onclick="askPreset('SLA bàn giao R&D sang Sourcing là bao lâu và gồm những tài liệu gì?')" class="text-[10px] px-2 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-300 rounded border border-slate-700">SLA 15 ngày R&D->Sourcing</button>
+              <button onclick="askPreset('Các lỗi kiểm định phổ biến nhất trong 1.181 SKUs và cách phòng tránh?')" class="text-[10px] px-2 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-300 rounded border border-slate-700">Top lỗi 1.181 SKUs</button>
+              <button onclick="askPreset('Quy định BPA-Free và Lead-Free đối với đồ dùng trẻ em xuất Canada/Mexico?')" class="text-[10px] px-2 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-300 rounded border border-slate-700">BPA/Lead Canada-Mexico</button>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+
+          <!-- Input -->
+          <form onsubmit="event.preventDefault(); sendChatMessage();" class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
+            <input id="chatInput" type="text" placeholder="Nhập câu hỏi kỹ thuật hoặc quy chuẩn..." class="flex-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            <button type="submit" class="px-3.5 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-lg text-xs cursor-pointer">Gửi</button>
+          </form>
+        </div>
+
+        <!-- Micro-Learning Video Simulator -->
+        <div class="lg:col-span-5 flex flex-col h-[700px] bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+          <div class="px-5 py-3.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-film text-teal-400"></i>
+              <h3 class="text-xs font-bold text-white">Bài Giảng Onboarding 60 Giây</h3>
+            </div>
+            <span id="videoTimerText" class="text-xs font-mono font-bold text-teal-300">0:00 / 1:00</span>
+          </div>
+
+          <div class="flex-1 bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+            <div id="avatarRing" class="w-24 h-24 rounded-full border-4 border-slate-700 flex items-center justify-center mb-4 transition-all">
+              <i class="fa-solid fa-user-astronaut text-3xl text-teal-300"></i>
+            </div>
+            <div id="videoStageBadge" class="text-[10px] font-mono text-teal-400 bg-teal-950/70 border border-teal-500/30 px-2 py-0.5 rounded-full mb-1">Giai đoạn 01</div>
+            <h4 id="videoSlideTitle" class="text-sm font-bold text-white mb-3">Thách Thức Chu Trình Cũ 146 Ngày</h4>
+            <div class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 min-h-[60px] flex items-center justify-center">
+              <p id="videoCaptionText" class="italic">"Chào mừng bạn đến EverJoy Home. Hãy cùng tìm hiểu cách Second Brain rút ngắn SLA!"</p>
+            </div>
+          </div>
+
+          <div class="p-4 bg-slate-900 border-t border-slate-800 space-y-2.5">
+            <input id="videoRange" type="range" min="0" max="60" value="0" oninput="scrubVideo(this.value)" class="w-full h-1.5 bg-slate-800 accent-teal-400 cursor-pointer">
+            <div class="flex items-center justify-between">
+              <button onclick="toggleVideoPlay()" id="videoPlayBtn" class="px-3.5 py-1.5 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-lg text-xs cursor-pointer">Phát Bài Giảng</button>
+              <button onclick="markVideoDone()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg text-xs cursor-pointer">Xác Nhận Đã Học (+50 XP)</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: KSAO MATRIX -->
+      <section id="tab-ksao" class="workspace-tab hidden space-y-6">
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 backdrop-blur flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-white">Ma Trận Năng Lực & Đào Tạo Chéo (KSAO)</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Kiến thức (K) · Kỹ năng (S) · Khả năng (A) · Thái độ (O) cho R&D, Sourcing, Marketing</p>
+          </div>
+          <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl flex items-center gap-3">
+            <span class="text-2xl font-bold text-emerald-400 font-mono-nums" id="ksaoTotalPercent">72%</span>
+            <div class="text-xs text-slate-400">
+              <div class="font-bold text-white">Tiến độ Đào tạo Tổng</div>
+              <div>Cấp bậc: Chuyên gia Bậc 4</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="ksaoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- TAB 5: SLA 146d -> 90d TRACKER -->
+      <section id="tab-sla" class="workspace-tab hidden space-y-6">
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 backdrop-blur">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <h2 class="text-xl font-bold text-white">Bộ Đo Lường SLA: 146 Ngày → Dưới 90 Ngày</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Rút ngắn 58 ngày chu trình phát triển sản phẩm ra thị trường quốc tế.</p>
+            </div>
+            <div class="px-4 py-2 bg-emerald-950/60 border border-emerald-500/40 rounded-xl text-center">
+              <div class="text-[10px] text-emerald-400">SLA Cam kết Hiện tại</div>
+              <div class="text-xl font-bold text-white font-mono-nums">88 Ngày</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+              <div class="text-[10px] text-teal-400 font-mono">STAGE 01</div>
+              <div class="text-sm font-bold text-white mt-1">R&D & Ý Tưởng</div>
+              <div class="mt-2 text-xs text-slate-400">Cũ: 28d → <strong class="text-emerald-400">15 Ngày</strong></div>
+            </div>
+            <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+              <div class="text-[10px] text-cyan-400 font-mono">STAGE 02</div>
+              <div class="text-sm font-bold text-white mt-1">3D CAD & CMF</div>
+              <div class="mt-2 text-xs text-slate-400">Cũ: 35d → <strong class="text-emerald-400">20 Ngày</strong></div>
+            </div>
+            <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+              <div class="text-[10px] text-amber-400 font-mono">STAGE 03</div>
+              <div class="text-sm font-bold text-white mt-1">Sourcing & Sample</div>
+              <div class="mt-2 text-xs text-slate-400">Cũ: 55d → <strong class="text-emerald-400">35 Ngày</strong></div>
+            </div>
+            <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+              <div class="text-[10px] text-emerald-400 font-mono">STAGE 04</div>
+              <div class="text-sm font-bold text-white mt-1">Lab Test & GTM</div>
+              <div class="mt-2 text-xs text-slate-400">Cũ: 28d → <strong class="text-emerald-400">18 Ngày</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Detail Reader Modal -->
+  <div id="detailModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+        <h3 id="modalTitle" class="text-base font-bold text-white">Chi tiết tài liệu</h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div id="modalBody" class="text-xs text-slate-300 space-y-2 leading-relaxed"></div>
+      <div class="pt-2 text-right">
+        <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold cursor-pointer">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vanilla JavaScript Logic -->
+  <script>
+    // State
+    let currentUser = { name: 'Nguyễn Văn A', role: 'R&D Specialist' };
+    let currentVideoSec = 0;
+    let isVideoPlaying = false;
+    let videoInterval = null;
+
+    const ksaoData = [
+      { id: 1, title: 'Kiến thức Tiêu chuẩn FDA & CPSIA Lead-Free', cat: 'Knowledge', role: 'R&D', percent: 90, completed: true },
+      { id: 2, title: 'Kỹ năng Phân tích Dung sai CAD 3D & Renn nắp', cat: 'Skills', role: 'R&D', percent: 75, completed: false },
+      { id: 3, title: 'Đàm phán BOM & Thẩm định Nhà máy OEM', cat: 'Knowledge', role: 'Sourcing', percent: 65, completed: false },
+      { id: 4, title: 'Quản trị SLA Chu trình 90 Ngày', cat: 'Abilities', role: 'Cross', percent: 85, completed: true },
+      { id: 5, title: 'Đọc Báo cáo Thử nghiệm SGS / Intertek', cat: 'Skills', role: 'Sourcing', percent: 60, completed: false },
+      { id: 6, title: 'Tối ưu Listing Amazon Compliance US', cat: 'Skills', role: 'Marketing', percent: 70, completed: false },
+    ];
+
+    const wikiArticles = [
+      { type: 'std', code: 'FDA 21 CFR 177', title: 'Quy chuẩn Vật liệu Tiếp xúc Thực phẩm (Food Contact) - FDA Hoa Kỳ', desc: 'Quy chuẩn bắt buộc cho Drinkware: Thép ruột bình Inox SUS 304/316, gioăng Platinum Silicone chịu nhiệt 120°C không mùi lưu hóa, nắp nhựa Tritan không thôi nhiễm BPA.' },
+      { type: 'std', code: 'CPSIA & Lead-Free', title: 'Tiêu chuẩn Chì & Phthalates (<90 ppm) Cho Baby Products', desc: 'Quy định nghiêm ngặt của Hoa Kỳ: Hàm lượng chì sơn phủ ≤ 90 ppm, chì cơ chất ≤ 100 ppm. Đáy bình giữ nhiệt EverJoy Home 100% hàn Laser không chì.' },
+      { type: 'sku', code: 'SKU-EJH-DW802', title: 'Bình giữ nhiệt Titan 750ml - Khắc phục xì gioăng nắp 95°C', desc: 'Sự cố: Khí nóng làm xẹp gioăng 0.35mm. Giải pháp: Chuẩn hóa gioăng Platinum Silicone 65 Shore A hai tầng đệm có rãnh xả áp.' },
+      { type: 'sku', code: 'SKU-EJH-BB104', title: 'Bình tập uống Spout Cup 280ml - Vượt qua Drop Test 2.0m', desc: 'Sự cố: Nứt gãy khớp tay cầm khi rơi 1.5m. Giải pháp: Thay thế bằng nhựa Tritan TX2001 đúc liền khối bọc TPE đàn hồi chống sốc.' },
+      { type: 'sku', code: 'SKU-EJH-DW512', title: 'Ly Coffee Tumbler 500ml - Chống bong tróc sơn máy rửa chén', desc: 'Sự cố: Bong tróc sơn tĩnh điện mờ sau 30 chu kỳ rửa chén. Giải pháp: Bổ sung công đoạn phun cát Sa 2.5 và phủ lót Ceramic Primer.' }
+    ];
+
+    function doLogin() {
+      const val = document.getElementById('loginInputUser').value.trim();
+      if (val) {
+        currentUser.name = val.includes('@') ? val.split('@')[0] : val;
+      }
+      document.getElementById('userNameText').innerText = currentUser.name;
+      document.getElementById('userRoleText').innerText = currentUser.role;
+      document.getElementById('userAvatarText').innerText = currentUser.name[0].toUpperCase();
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('mainDashboard').classList.remove('hidden');
+      renderWikiContent();
+      renderKsaoGrid();
+      initChat();
+    }
+
+    function quickSelectUser(name, role) {
+      currentUser = { name, role };
+      doLogin();
+    }
+
+    function doLogout() {
+      document.getElementById('mainDashboard').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.workspace-tab').forEach(el => el.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.className = 'nav-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-300 hover:text-white hover:bg-slate-800';
+      });
+      const activeNav = document.getElementById('nav-' + tabId);
+      if (activeNav) {
+        activeNav.className = 'nav-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors bg-teal-500/15 text-teal-300 border border-teal-500/30';
+      }
+    }
+
+    function renderWikiContent() {
+      const query = (document.getElementById('wikiSearchInput')?.value || '').toLowerCase();
+      const container = document.getElementById('wikiContainer');
+      if (!container) return;
+
+      const filtered = wikiArticles.filter(a => a.title.toLowerCase().includes(query) || a.code.toLowerCase().includes(query) || a.desc.toLowerCase().includes(query));
+
+      container.innerHTML = filtered.map(item => `
+        <div onclick="openModal('${item.title}', '${item.desc}')" class="p-4 bg-slate-900 border border-slate-800 hover:border-teal-500/50 rounded-xl cursor-pointer transition-all hover:-translate-y-0.5">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-[10px] font-mono px-2 py-0.5 bg-slate-800 text-teal-300 rounded border border-slate-700">${item.code}</span>
+            <span class="text-[11px] text-slate-400">${item.type === 'std' ? 'Tiêu chuẩn Quốc Tế' : 'Bài học 1.181 SKUs'}</span>
+          </div>
+          <h4 class="text-sm font-semibold text-white">${item.title}</h4>
+          <p class="text-xs text-slate-300 mt-1 line-clamp-2">${item.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderKsaoGrid() {
+      const grid = document.getElementById('ksaoGrid');
+      if (!grid) return;
+
+      const avg = Math.round(ksaoData.reduce((a, b) => a + b.percent, 0) / ksaoData.length);
+      document.getElementById('ksaoTotalPercent').innerText = avg + '%';
+      document.getElementById('quickKsaoScore').innerText = avg + '%';
+
+      grid.innerHTML = ksaoData.map(s => `
+        <div class="bg-slate-900 border ${s.completed ? 'border-emerald-500/40' : 'border-slate-800'} rounded-xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-[10px] text-slate-400 mb-2">
+              <span class="px-2 py-0.5 bg-slate-800 rounded text-teal-300">${s.cat}</span>
+              <span>Vai trò: ${s.role}</span>
+            </div>
+            <h4 class="text-xs font-bold text-white mb-2">${s.title}</h4>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mb-3">
+              <div style="width: ${s.percent}%" class="h-full bg-teal-500"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-800 text-xs">
+            <span class="font-mono text-emerald-400">${s.percent}%</span>
+            <button onclick="toggleKsao(${s.id})" class="px-2.5 py-1 ${s.completed ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' : 'bg-teal-500 text-slate-950 font-bold'} rounded text-[11px] cursor-pointer">
+              ${s.completed ? 'Đã Đạt' : 'Xác Nhận'}
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleKsao(id) {
+      const item = ksaoData.find(x => x.id === id);
+      if (item) {
+        item.completed = !item.completed;
+        item.percent = item.completed ? 100 : 50;
+        renderKsaoGrid();
+      }
+    }
+
+    function initChat() {
+      const c = document.getElementById('chatMessages');
+      if (c && c.children.length === 0) {
+        c.innerHTML = `
+          <div class="flex gap-2">
+            <div class="w-7 h-7 rounded bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-robot"></i></div>
+            <div class="bg-slate-800 p-3 rounded-xl text-xs text-slate-200 max-w-[85%] leading-relaxed">
+              Xin chào! Tôi là EverJoy Second Brain AI Agent. Bạn cần tra cứu tiêu chuẩn FDA, SLA SOP 90 ngày hay dữ liệu lỗi từ 1.181 SKUs?
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function askPreset(q) {
+      document.getElementById('chatInput').value = q;
+      sendChatMessage();
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const c = document.getElementById('chatMessages');
+      c.innerHTML += `
+        <div class="flex justify-end gap-2">
+          <div class="bg-teal-600 text-white p-2.5 rounded-xl text-xs max-w-[85%]">${text}</div>
+        </div>
+      `;
+      input.value = '';
+
+      setTimeout(() => {
+        let reply = "Dữ liệu đối chiếu từ EverJoy Second Brain: Quy chuẩn an toàn FDA 21 CFR 177 và cam kết SLA dưới 90 ngày luôn được giám sát tự động.";
+        if (text.toLowerCase().includes('fda')) {
+          reply = "Quy chuẩn FDA Drinkware: Ruột bình bắt buộc Inox SUS 304/316, gioăng Platinum Silicone đạt chuẩn 21 CFR 177.2600 và không chứa chì sơn phủ (>90ppm).";
+        } else if (text.toLowerCase().includes('sla')) {
+          reply = "SLA bàn giao R&D -> Sourcing là tối đa 15 ngày, bao gồm: File CAD 3D hoàn chỉnh, PRD duyệt bởi 2 bên và bảng CMF màu Pantone.";
+        } else if (text.toLowerCase().includes('lỗi') || text.toLowerCase().includes('sku')) {
+          reply = "Thống kê 1.181 SKUs: Top 1 là rò rỉ nắp (41%), top 2 là bong tróc sơn qua máy rửa chén (27%), top 3 là nứt gãy tay cầm drop test (19%). Tất cả đã có SOP khắc phục 100%.";
+        }
+        c.innerHTML += `
+          <div class="flex gap-2">
+            <div class="w-7 h-7 rounded bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-robot"></i></div>
+            <div class="bg-slate-800 p-3 rounded-xl text-xs text-slate-200 max-w-[85%] leading-relaxed">${reply}</div>
+          </div>
+        `;
+        c.scrollTop = c.scrollHeight;
+      }, 700);
+    }
+
+    function toggleVideoPlay() {
+      isVideoPlaying = !isVideoPlaying;
+      const btn = document.getElementById('videoPlayBtn');
+      const ring = document.getElementById('avatarRing');
+      if (isVideoPlaying) {
+        btn.innerText = 'Tạm Dừng';
+        ring.className = 'w-24 h-24 rounded-full border-4 border-teal-400 scale-105 shadow-lg shadow-teal-500/30 flex items-center justify-center mb-4 transition-all';
+        videoInterval = setInterval(() => {
+          if (currentVideoSec >= 60) {
+            toggleVideoPlay();
+            return;
+          }
+          currentVideoSec++;
+          updateVideoUI();
+        }, 1000);
+      } else {
+        btn.innerText = 'Phát Bài Giảng';
+        ring.className = 'w-24 h-24 rounded-full border-4 border-slate-700 flex items-center justify-center mb-4 transition-all';
+        clearInterval(videoInterval);
+      }
+    }
+
+    function scrubVideo(sec) {
+      currentVideoSec = Number(sec);
+      updateVideoUI();
+    }
+
+    function updateVideoUI() {
+      document.getElementById('videoRange').value = currentVideoSec;
+      document.getElementById('videoTimerText').innerText = `0:${currentVideoSec < 10 ? '0' + currentVideoSec : currentVideoSec} / 1:00`;
+      const capt = document.getElementById('videoCaptionText');
+      const title = document.getElementById('videoSlideTitle');
+      const badge = document.getElementById('videoStageBadge');
+
+      if (currentVideoSec < 15) {
+        badge.innerText = 'Giai đoạn 01';
+        title.innerText = 'Thách Thức Chu Trình Cũ 146 Ngày';
+        capt.innerText = '"Trước đây thiếu cơ sở tri thức tập trung khiến quy trình R&D kéo dài đến 146 ngày."';
+      } else if (currentVideoSec < 30) {
+        badge.innerText = 'Giai đoạn 02';
+        title.innerText = 'Chuẩn Hóa SOP Bàn Giao Dưới 90 Ngày';
+        capt.innerText = '"Second Brain phân bổ chuẩn xác 4 chặng: 15d R&D -> 20d Design -> 35d Sourcing -> 18d MKT."';
+      } else if (currentVideoSec < 45) {
+        badge.innerText = 'Giai đoạn 03';
+        title.innerText = 'Kỷ Luật Không Lặp Lỗi 1.181 SKUs';
+        capt.innerText = '"Toàn bộ dữ liệu kiểm định xì gioăng, rơi vỡ, chì được mã hóa để tân binh không lặp lỗi."';
+      } else {
+        badge.innerText = 'Giai đoạn 04';
+        title.innerText = 'Chinh Phục Thị Trường US / CA / MX';
+        capt.innerText = '"Tuân thủ tuyệt đối FDA 21 CFR và Prop 65 đưa sản phẩm EverJoy Home vươn tầm toàn cầu."';
+      }
+    }
+
+    function markVideoDone() {
+      alert('Đã ghi nhận hoàn thành bài giảng Micro-Learning Onboarding 60s (+50 XP)!');
+    }
+
+    function openModal(t, b) {
+      document.getElementById('modalTitle').innerText = t;
+      document.getElementById('modalBody').innerText = b;
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
